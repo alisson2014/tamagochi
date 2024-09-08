@@ -8,12 +8,12 @@ export default function TabsLayout() {
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#56ac24',
-          tabBarInactiveTintColor: '#CDCDE0',
+          tabBarActiveTintColor: '#F08000',
+          tabBarInactiveTintColor: '#161622',
           tabBarStyle: {
-            backgroundColor: '#161622',
+            backgroundColor: '#CDCDE0',
             borderTopWidth: 1,
-            borderTopColor: '#232533',
+            borderTopColor: '#E2DFD2',
             height: 84
           }
         }}
@@ -49,15 +49,15 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
-          name='create'
+          name='create/index'
           options={{
-            title: 'Create',
+            title: 'Adicionar',
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 source={icons.plus}
                 tintColor={color}
-                name='Create'
+                name='Adicionar'
                 focused={focused}
               />
             )

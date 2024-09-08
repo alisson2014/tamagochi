@@ -3,19 +3,21 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
         display: 'flex',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#2c7377',
+        backgroundColor: '#2c7429',
         borderRadius: 8,
         minHeight: 64,
         width: '100%'
     },
     text: {
         fontFamily: 'Poppins-SemiBold, sans-serif',
-        color: '#161622',
-        fontSize: 18
+        color: '#f5f5ff',
+        fontSize: 20,
+        fontWeight: '700'
     },
     loading: {
-        marginLeft: 2
+        marginLeft: 16
     }
 });
