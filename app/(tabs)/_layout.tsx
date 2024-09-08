@@ -1,37 +1,69 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
+import { icons } from '@/constants';
+import { TabIcon } from '@/components';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function TabsLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
+    <>
+      <Tabs
+        screenOptions={{
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#56ac24',
+          tabBarInactiveTintColor: '#CDCDE0',
+          tabBarStyle: {
+            backgroundColor: '#161622',
+            borderTopWidth: 1,
+            borderTopColor: '#232533',
+            height: 84
+          }
         }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name='home'
+          options={{
+            title: 'Home',
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon
+                source={icons.home}
+                tintColor={color}
+                name='Home'
+                focused={focused}
+              />
+            )
+          }}
+        />
+        <Tabs.Screen
+          name='bookmark'
+          options={{
+            title: 'Bookmark',
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon 
+                source={icons.bookmark}
+                tintColor={color}
+                name='Bookmark'
+                focused={focused}
+              />
+            )
+          }}
+        />
+        <Tabs.Screen
+          name='create'
+          options={{
+            title: 'Create',
+            headerShown: false,
+            tabBarIcon: ({ color, focused }) => (
+              <TabIcon 
+                source={icons.plus}
+                tintColor={color}
+                name='Create'
+                focused={focused}
+              />
+            )
+          }}
+        />
+      </Tabs>
+    </>
   );
-}
+};
