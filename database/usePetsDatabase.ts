@@ -34,5 +34,24 @@ export function usePetsDatabase() {
         }
     }
 
-    return { create, searchByName };
+    async function markFavorite(id: number, favorite: boolean) {
+        const stmt = await database.prepareAsync('UPDATE pets SET favorite = $favorite WHERE id = $id');
+
+        try {
+            const result = await stmt.executeAsync({
+                $favorite: favorite,
+                $id: id
+            });
+
+            const insertedRowId = result.lastInsertRowId;
+
+            return { insertedRowId };
+        } catch (error) {
+            throw error;
+        } finally {
+            await stmt.finalizeAsync();
+        }
+    }
+
+    return { create, searchByName, markFavorite };
 };

@@ -1,26 +1,36 @@
-import { Pet } from "@/types";
-import { Image, Pressable, PressableProps, Text } from "react-native";
-
-type IPetItem = PressableProps & {
-    data: Pet
-};
+import { icons } from "@/constants";
+import { usePetsDatabase } from "@/database/usePetsDatabase";
+import { TouchableOpacity, Image, Pressable, Text, View } from "react-native";
+import { styles } from "./styles";
+import { IPetItem } from "./types";
 
 export default function PetItem({ data, ...rest }: IPetItem) {
+    const petsDatabase = usePetsDatabase();
+
+    const markFavorite = async () => {
+        await petsDatabase.markFavorite(data.id, !data.favorite);
+    };
+
     return (
-        <Pressable {...rest} style={{ 
-            backgroundColor: '#cecece', 
-            paddingLeft: 24,
-            borderRadius: 5,
-            gap: 12,
-            flexDirection: 'row'
-        }}>
-            <Text>{data.id} - {data.name} - {data.favorite}</Text>
-            {data.uri && (
-                <Image 
-                    source={{ uri: data.uri }}
-                    resizeMode='cover'
-                />
-            )}
+        <Pressable {...rest} style={styles.container}>
+            <View style={styles.textContainer}>
+                <Text style={styles.title}>{data.name}</Text>
+                <TouchableOpacity onPress={markFavorite}>
+                    <Image 
+                        resizeMode='center'
+                        style={[
+                            styles.bookmark,
+                            { tintColor: data.favorite ? '#F08000' : '#161622' }
+                        ]}
+                        source={icons.bookmark}
+                    />
+                </TouchableOpacity>
+            </View>
+            <Image 
+                source={{ uri: data.uri }}
+                resizeMode='cover'
+                style={styles.image}
+            />
         </Pressable>
     );
 };

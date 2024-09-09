@@ -1,4 +1,4 @@
-import { View, TextInput, Text, TouchableOpacity, Image, ScrollView, Alert, PermissionsAndroid } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as DocumentPicker from "expo-document-picker";
 import { useState, useEffect } from 'react';
@@ -10,8 +10,13 @@ import { StatusBar } from 'expo-status-bar';
 import * as baseStyles from '@/styles';
 import { usePetsDatabase } from '@/database/usePetsDatabase';
 
+const initPet: NewPet = {
+  name: '',
+  uri: ''
+};
+
 export default function Create() {
-  const [pet, setPet] = useState<NewPet>({ name: '', uri: '' });
+  const [pet, setPet] = useState<NewPet>(initPet);
   const [disabledSubmit, setDisabledSubmit] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -20,13 +25,15 @@ export default function Create() {
   const handleSubmit = async () => {
     if(!pet.name) {
       return Alert.alert('Nome', 'Nome do bichinho é obrigatório');
+    } else if (!pet.uri) {
+      return Alert.alert('Imagem', 'Imagem do bichinho é obrigatória');
     }
 
     setLoading(true);
-
     try {
       const { insertedRowId } = await petsDatabase.create(pet);
       Alert.alert(`Novo bichinho cadastrado com sucesso ID: ${insertedRowId}`);
+      setPet(initPet);
     } catch (error) {
       Alert.alert(`Erro ao salvar bichinho :<`);
       console.error(`Erro ao salvar novo bichinho: ${error}`);
@@ -46,7 +53,6 @@ export default function Create() {
         ...pet,
         uri: result.assets[0].uri,
       });
-      console.log(result, result.assets[0].uri);
     } else {
       setTimeout(() => {
         Alert.alert("Document picked", JSON.stringify(result, null, 2));

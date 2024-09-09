@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <SafeAreaView style={{ height: '100%' }}>
         <ScrollView style={scrollViewContainer}>
-            <Text style={mainTitle}>Encontre seu bichinho</Text>
+            <Text style={[mainTitle, { marginBottom: 16 }]}>Encontre seu bichinho</Text>
             {pets.length === 0 && (
               <Link href='/create' style={{ color: '#F08000', fontWeight: '500' }}>Cadastre seu primeiro bichinho</Link>
             )}

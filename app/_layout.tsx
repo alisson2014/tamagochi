@@ -34,7 +34,7 @@ export default function RootLayout() {
   }
 
   return (
-    <SQLiteProvider databaseName='tamagochi.db' onInit={initializeDatabase}>
+    <SQLiteProvider databaseName='tamagochi2.db' onInit={initializeDatabase}>
       <Stack>
           <Stack.Screen name='index' options={{ headerShown: false }} />
           <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
