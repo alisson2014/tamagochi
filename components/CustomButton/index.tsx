@@ -6,16 +6,15 @@ export default function CustomButton({
   title,
   containerStyles,
   textStyles,
+  isLoading,
   ...props
 }: ICustomButton) {
-  const { disabled: isLoading } = props;
-
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       style={[
         styles.container,
-        { opacity: isLoading ? 80 : 100 }
+        { opacity: props.disabled ? 0.75 : 1 }
       ]}
       {...props}
     >
