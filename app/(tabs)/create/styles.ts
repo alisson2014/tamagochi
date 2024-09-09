@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     },
     uploadCover: {
         width: '100%',
-        height: 64,
+        height: 256,
         borderRadius: 16
     }
 });

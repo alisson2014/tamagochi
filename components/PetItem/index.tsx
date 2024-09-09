@@ -1,5 +1,5 @@
 import { Pet } from "@/types";
-import { Pressable, PressableProps, Text } from "react-native";
+import { Image, Pressable, PressableProps, Text } from "react-native";
 
 type IPetItem = PressableProps & {
     data: Pet
@@ -7,8 +7,20 @@ type IPetItem = PressableProps & {
 
 export default function PetItem({ data, ...rest }: IPetItem) {
     return (
-        <Pressable {...rest}>
-            <Text>{data.id} - {data.name} - {data.uri} - {data.favorite}</Text>
+        <Pressable {...rest} style={{ 
+            backgroundColor: '#cecece', 
+            paddingLeft: 24,
+            borderRadius: 5,
+            gap: 12,
+            flexDirection: 'row'
+        }}>
+            <Text>{data.id} - {data.name} - {data.favorite}</Text>
+            {data.uri && (
+                <Image 
+                    source={{ uri: data.uri }}
+                    resizeMode='cover'
+                />
+            )}
         </Pressable>
     );
 };

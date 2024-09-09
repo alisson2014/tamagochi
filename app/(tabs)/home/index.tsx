@@ -41,6 +41,7 @@ export default function Home() {
             <FlatList 
               data={pets}
               renderItem={({ item }) => <PetItem data={item} />}
+              contentContainerStyle={{ gap: 16 }}
             />
         </ScrollView>
     </SafeAreaView>

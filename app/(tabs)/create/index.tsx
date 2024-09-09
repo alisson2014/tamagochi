@@ -1,5 +1,6 @@
-import { View, TextInput, Text, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, Image, ScrollView, Alert, PermissionsAndroid } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as DocumentPicker from "expo-document-picker";
 import { useState, useEffect } from 'react';
 import { NewPet } from '@/types';
 import { icons } from '@/constants';
@@ -34,6 +35,25 @@ export default function Create() {
     }
   };
 
+  const openImagePicker = async () => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: ['image/*']
+    });
+    
+
+    if (!result.canceled) {
+      setPet({
+        ...pet,
+        uri: result.assets[0].uri,
+      });
+      console.log(result, result.assets[0].uri);
+    } else {
+      setTimeout(() => {
+        Alert.alert("Document picked", JSON.stringify(result, null, 2));
+      }, 100);
+    }
+  };
+
   useEffect(() => {
     setDisabledSubmit(!pet.name);
   }, [pet]);
@@ -60,7 +80,7 @@ export default function Create() {
 
           <View style={baseStyles.formGroup}>
             <Text style={baseStyles.label}>Imagem</Text>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={openImagePicker}>
               {pet.uri ? (
                 <Image
                   source={{ uri: pet.uri }}
