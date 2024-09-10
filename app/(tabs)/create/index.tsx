@@ -75,7 +75,6 @@ export default function Create() {
           <View style={baseStyles.formGroup}>
             <Text style={baseStyles.label}>Nome</Text>
             <TextInput 
-              // autoFocus
               maxLength={50}
               placeholder='Digite o nome do seu bichinho' 
               style={baseStyles.defaultStyles.input} 

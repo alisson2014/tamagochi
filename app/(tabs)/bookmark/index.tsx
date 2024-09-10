@@ -1,8 +1,8 @@
 import { PetItem, SearchPet } from '@/components';
+import CustomLink from '@/components/CustomLink';
 import { usePetsDatabase } from '@/database/usePetsDatabase';
 import { mainTitle, scrollViewContainer } from '@/styles';
 import { Pet } from '@/types';
-import { Link } from 'expo-router';
 import { useEffect, useState, useCallback } from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -50,15 +50,7 @@ export default function Home() {
               <SearchPet onChangeText={e => setSearch(e)} value={search} />
 
               {pets.length === 0 && (
-                <Link href='/create' style={{ 
-                  color: '#F08000', 
-                  fontWeight: '600',
-                  fontSize: 18,
-                  fontFamily: 'Poppins-Black',
-                  textAlign: 'center'
-                }}>
-                  Nenhum bichinho encontrado {':<'} Que tal cadastrar um?
-                </Link>
+                <CustomLink href='/create' title='Nenhum bichinho encontrado :< Que tal cadastrar um?' />
               )}
             </>
           }
