@@ -8,7 +8,7 @@ import { CustomButton } from '@/components';
 import { styles } from './styles';
 import { StatusBar } from 'expo-status-bar';
 import * as baseStyles from '@/styles';
-import { usePetsDatabase } from '@/database/usePetsDatabase';
+import { usePetsDatabase } from '@/database';
 
 const initPet: NewPet = {
   name: '',
@@ -32,7 +32,8 @@ export default function Create() {
     setLoading(true);
     try {
       const { insertedRowId } = await petsDatabase.create(pet);
-      Alert.alert(`Novo bichinho cadastrado com sucesso ID: ${insertedRowId}`);
+      Alert.alert('Sucesso', `Novo bichinho cadastrado com sucesso`);
+      console.info(`Novo bichinho cadastrado com sucesso: ${insertedRowId}`);
       setPet(initPet);
     } catch (error) {
       Alert.alert(`Erro ao salvar bichinho :<`);
@@ -55,13 +56,13 @@ export default function Create() {
       });
     } else {
       setTimeout(() => {
-        Alert.alert("Document picked", JSON.stringify(result, null, 2));
+        console.info("Document picked", JSON.stringify(result, null, 2));
       }, 100);
     }
   };
 
   useEffect(() => {
-    setDisabledSubmit(!pet.name);
+    setDisabledSubmit(!pet.name || !pet.uri);
   }, [pet]);
 
   return (

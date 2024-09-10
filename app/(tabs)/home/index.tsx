@@ -1,8 +1,9 @@
-import { PetItem, SearchPet } from '@/components';
-import CustomLink from '@/components/CustomLink';
-import { usePetsDatabase } from '@/database/usePetsDatabase';
+import { PetItem, SearchPet, CustomLink } from '@/components';
+import { usePetsDatabase } from '@/database';
 import { mainTitle, scrollViewContainer } from '@/styles';
 import { Pet } from '@/types';
+import { useFocusEffect } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState, useCallback } from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -35,20 +36,22 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    list();
-  }, [list]);
+  useFocusEffect(
+    useCallback(() => {
+      list();
+    }, [list])
+  );
 
   return (
     <SafeAreaView style={{ height: '100%' }}>
       <View style={scrollViewContainer}>
+        <Text style={[mainTitle, { marginBottom: 16 }]}>Encontre seu bichinho</Text>
+
+        <SearchPet onChangeText={e => setSearch(e)} value={search} />
+
         <FlatList 
           ListHeaderComponent={
             <>
-              <Text style={[mainTitle, { marginBottom: 16 }]}>Encontre seu bichinho</Text>
-
-              <SearchPet onChangeText={e => setSearch(e)} value={search} />
-
               {pets.length === 0 && (
                 <CustomLink href='/create' title='Nenhum bichinho encontrado :< Que tal cadastrar um?' />
               )}
@@ -57,8 +60,11 @@ export default function Home() {
           data={pets}
           renderItem={({ item }) => <PetItem data={item} markFavorite={markFavorite} />}
           contentContainerStyle={{ paddingBottom: 16, gap: 16 }}
+          style={{ maxHeight: '80%' }}
         />
       </View>
+
+      <StatusBar style='dark' />
     </SafeAreaView>
   );
 };

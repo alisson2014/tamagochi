@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     searchContainer: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -11,7 +10,7 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 2,
         borderColor: '#999',
-        height: 54,
+        height: 64,
     },
     searchInput: {
         flex: 1,

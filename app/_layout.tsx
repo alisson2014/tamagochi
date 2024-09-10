@@ -2,7 +2,7 @@ import { SplashScreen, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { SQLiteProvider } from 'expo-sqlite';
-import { initializeDatabase } from '@/database/initializeDatabase';
+import { initializeDatabase } from '@/database';
 
 SplashScreen.preventAutoHideAsync();
 

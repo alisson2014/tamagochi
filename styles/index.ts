@@ -8,7 +8,7 @@ export const defaultStyles = StyleSheet.create({
         backgroundColor: '#f5f5ff'
     },
     input: {
-        height: 54,
+        height: 64,
         borderWidth: 2,
         borderColor: '#999',
         borderRadius: 8,
