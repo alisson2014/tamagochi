@@ -34,7 +34,7 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
-          name='bookmark'
+          name='bookmark/index'
           options={{
             title: 'Favoritos',
             headerShown: false,

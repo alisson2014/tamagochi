@@ -27,8 +27,16 @@ export function usePetsDatabase() {
 
     async function searchByName(name: string) {
         try {
-            console.log("to aqui");
             const query = 'SELECT id, name, uri, favorite FROM pets WHERE name LIKE ?';
+            return await database.getAllAsync<Pet>(query, `%${name}%`);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async function searchByNameFavorite(name: string) {
+        try {
+            const query = 'SELECT id, name, uri, favorite FROM pets WHERE name LIKE ? AND favorite = 1';
             return await database.getAllAsync<Pet>(query, `%${name}%`);
         } catch (error) {
             throw error;
@@ -52,5 +60,5 @@ export function usePetsDatabase() {
         }
     }
 
-    return { create, searchByName, markFavorite };
+    return { create, searchByName, markFavorite, searchByNameFavorite };
 };

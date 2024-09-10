@@ -16,7 +16,7 @@ export default function Home() {
 
   const list = useCallback(async () => {
     try {
-      const response = await petsDatabase.searchByName(search);
+      const response = await petsDatabase.searchByNameFavorite(search);
       setPets(response);
     } catch (error) {
       Alert.alert("Erro", "Ocorreu um erro ao buscar os bichinhos, tente novamente mais tarde");
@@ -63,7 +63,7 @@ export default function Home() {
             </>
           }
           data={pets}
-          renderItem={({ item }) => <PetItem data={item} markFavorite={markFavorite} />}
+          renderItem={({ item }) => <PetItem data={item} markFavorite={markFavorite} showBookmark={false} />}
           contentContainerStyle={{ paddingBottom: 16, gap: 16 }}
         />
       </View>
