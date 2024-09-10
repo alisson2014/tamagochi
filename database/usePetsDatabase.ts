@@ -27,6 +27,7 @@ export function usePetsDatabase() {
 
     async function searchByName(name: string) {
         try {
+            console.log("to aqui");
             const query = 'SELECT id, name, uri, favorite FROM pets WHERE name LIKE ?';
             return await database.getAllAsync<Pet>(query, `%${name}%`);
         } catch (error) {
@@ -35,7 +36,7 @@ export function usePetsDatabase() {
     }
 
     async function markFavorite(id: number, favorite: boolean) {
-        const stmt = await database.prepareAsync('UPDATE pets SET favorite = $favorite WHERE id = $id');
+        const stmt = await database.prepareAsync(`UPDATE pets SET favorite = $favorite WHERE id = $id`);
 
         try {
             const result = await stmt.executeAsync({
@@ -48,8 +49,6 @@ export function usePetsDatabase() {
             return { insertedRowId };
         } catch (error) {
             throw error;
-        } finally {
-            await stmt.finalizeAsync();
         }
     }
 

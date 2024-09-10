@@ -18,7 +18,7 @@ export default function TabIcon({ name, focused, ...props }: ITabIcon) {
                 style={[
                     styles.iconName,
                     { 
-                        fontFamily: focused ? 'Poppins-SemiBold, sans-serif' : 'Poppins-Regular, sans-serif',
+                        fontFamily: focused ? 'Poppins-SemiBold' : 'Poppins-Regular',
                         color
                     }
                 ]}

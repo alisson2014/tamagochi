@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     title: {
-        fontFamily: 'Poppins-SemiBold, sans-serif',
+        fontFamily: 'Poppins-SemiBold',
         fontWeight: '700',
         fontSize: 18,
         color: '#161622'

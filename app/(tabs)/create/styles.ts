@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         lineHeight: 28,
-        fontFamily: 'Poppins-Medium, sans-serif'
+        fontFamily: 'Poppins-Medium'
     },
     uploadCover: {
         width: '100%',

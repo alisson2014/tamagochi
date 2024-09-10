@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         width: '100%'
     },
     text: {
-        fontFamily: 'Poppins-SemiBold, sans-serif',
+        fontFamily: 'Poppins-SemiBold',
         color: '#f5f5ff',
         fontSize: 20,
         fontWeight: '700'

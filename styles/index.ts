@@ -9,7 +9,7 @@ export const defaultStyles = StyleSheet.create({
     },
     input: {
         height: 54,
-        borderWidth: 1,
+        borderWidth: 2,
         borderColor: '#999',
         borderRadius: 8,
         paddingHorizontal: 16 
@@ -37,13 +37,13 @@ export const { mainTitle } = StyleSheet.create({
         fontWeight: '800',
         lineHeight: 32,
         color: '#252521',
-        fontFamily: 'Poppins-SemiBold, sans-serif'
+        fontFamily: 'Poppins-SemiBold'
     }
 });
 
 export const { label } = StyleSheet.create({
     label: {
-        fontFamily: 'Poppins-Medium, sans-serif',
+        fontFamily: 'Poppins-Medium',
         fontSize: 16,
         fontWeight: '500',
     }
