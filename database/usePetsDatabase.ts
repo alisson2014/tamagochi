@@ -32,7 +32,7 @@ export function usePetsDatabase() {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     async function searchByNameFavorite(name: string) {
         try {
@@ -41,7 +41,7 @@ export function usePetsDatabase() {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
     async function markFavorite(id: number, favorite: boolean) {
         const stmt = await database.prepareAsync(`UPDATE pets SET favorite = $favorite WHERE id = $id`);
@@ -58,7 +58,29 @@ export function usePetsDatabase() {
         } catch (error) {
             throw error;
         }
-    }
+    };
 
-    return { create, searchByName, markFavorite, searchByNameFavorite };
+    async function remove(id: number) {
+        const stmt = await database.prepareAsync(`DELETE FROM pets WHERE id = $id`);
+
+        try {
+            const result = await stmt.executeAsync({ $id: id });
+
+            const insertedRowId = result.lastInsertRowId;
+
+            return { insertedRowId };
+        } catch (error) {
+            throw error;
+        } finally {
+            await stmt.finalizeAsync();
+        }
+    };
+
+    return { 
+        create, 
+        searchByName, 
+        markFavorite, 
+        searchByNameFavorite, 
+        remove 
+    };
 };

@@ -54,7 +54,7 @@ export default function Bookmark() {
             </>
           }
           data={pets}
-          renderItem={({ item }) => <PetItem data={item} markFavorite={markFavorite} showBookmark={false} />}
+          renderItem={({ item }) => <PetItem data={item} markFavorite={markFavorite} />}
           contentContainerStyle={{ paddingBottom: 16, gap: 16 }}
           style={{ maxHeight: '80%' }}
         />

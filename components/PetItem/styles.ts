@@ -3,32 +3,38 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: { 
         backgroundColor: '#CDCDE0', 
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
         borderRadius: 16,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     title: {
         fontFamily: 'Poppins-SemiBold',
         fontWeight: '700',
-        fontSize: 18,
+        fontSize: 20,
         color: '#161622'
     },
     textContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        height: 128
+    },
+    options: {
         display: 'flex',
         flexDirection: 'row',
         gap: 16
     },
     bookmark: {
-        width: 24,
-        height: 24
+        width: 32,
+        height: 32
     },
     image: {
-        marginVertical: 16,
-        width: '36%',
-        height: 112,
+        marginVertical: 32,
+        width: '40%',
+        height: 128,
         borderRadius: 128,
     }
 });

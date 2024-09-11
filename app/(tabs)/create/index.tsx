@@ -48,7 +48,6 @@ export default function Create() {
       type: ['image/*']
     });
     
-
     if (!result.canceled) {
       setPet({
         ...pet,

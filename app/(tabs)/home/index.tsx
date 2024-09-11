@@ -4,7 +4,7 @@ import { mainTitle, scrollViewContainer } from '@/styles';
 import { Pet } from '@/types';
 import { useFocusEffect } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState, useCallback } from 'react';
+import {  useState, useCallback } from 'react';
 import { Alert, FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -36,6 +36,32 @@ export default function Home() {
     }
   }, []);
 
+  const deletePet = useCallback((pet: Pet) => {
+    Alert.alert(
+      "Confirmação",
+      "Você tem certeza que deseja excluir este bichinho?",
+      [
+        {
+          text: "Cancelar",
+          style: "cancel"
+        },
+        {
+          text: "Excluir",
+          onPress: async () => {
+            try {
+              await petsDatabase.remove(pet.id);
+              await list();
+            } catch (error) {
+              console.error(`Erro ao deletar bichinho: ${error}`);
+            }
+          },
+          style: "destructive"
+        }
+      ],
+      { cancelable: true }
+    );
+  }, [list]);
+
   useFocusEffect(
     useCallback(() => {
       list();
@@ -58,7 +84,14 @@ export default function Home() {
             </>
           }
           data={pets}
-          renderItem={({ item }) => <PetItem data={item} markFavorite={markFavorite} />}
+          renderItem={({ item }) => (
+            <PetItem 
+              data={item} 
+              markFavorite={markFavorite} 
+              deletePet={deletePet}
+              showBookmark
+            />
+          )}
           contentContainerStyle={{ paddingBottom: 16, gap: 16 }}
           style={{ maxHeight: '80%' }}
         />
