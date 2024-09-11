@@ -43,6 +43,15 @@ export function usePetsDatabase() {
         }
     };
 
+    async function getById(id: number) {
+        try {
+            const query = 'SELECT * FROM pets WHERE id = ?';
+            return await database.getFirstAsync<Pet>(query, id);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async function markFavorite(id: number, favorite: boolean) {
         const stmt = await database.prepareAsync(`UPDATE pets SET favorite = $favorite WHERE id = $id`);
 
@@ -81,6 +90,7 @@ export function usePetsDatabase() {
         searchByName, 
         markFavorite, 
         searchByNameFavorite, 
-        remove 
+        remove,
+        getById
     };
 };

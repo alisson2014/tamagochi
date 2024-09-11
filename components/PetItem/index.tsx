@@ -1,8 +1,7 @@
-import { icons } from "@/constants";
-import { TouchableOpacity, Image, Pressable, Text, View } from "react-native";
-import { styles } from "./styles";
-import { IPetItem } from "./types";
-import { router } from "expo-router";
+import { TouchableOpacity, Image, Pressable, Text, View } from 'react-native';
+import { styles } from './styles';
+import { IPetItem } from './types';
+import { router, type Href } from 'expo-router';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function PetItem({ 
@@ -12,6 +11,11 @@ export default function PetItem({
     showBookmark = false, 
     ...rest 
 }: IPetItem) {
+    const petRoute: Href<object | string> = {
+        pathname: '/[petDetails]',   
+        params: { petDetails: data.id }
+    };
+
     return (
         <Pressable {...rest} style={styles.container}>
             <View style={styles.textContainer}>
@@ -21,24 +25,26 @@ export default function PetItem({
                     {showBookmark && (
                         <TouchableOpacity onPress={() => markFavorite(data)}>
                             <MaterialCommunityIcons 
-                                name="bookmark-multiple" 
+                                name='bookmark-multiple' 
                                 size={26} 
                                 color={data.favorite ? '#F08000' : '#161622'} 
                             />
                         </TouchableOpacity>
                     )}
 
-                    {typeof deletePet === "function" && (
+                    {typeof deletePet === 'function' && (
                         <TouchableOpacity onPress={() => deletePet(data)}>
-                            <MaterialCommunityIcons name="delete-forever" size={26} color="#161622" />
+                            <MaterialCommunityIcons name='delete-forever' size={26} color='#161622' />
                         </TouchableOpacity>
                     )}
                     
-                    <TouchableOpacity onPress={() => router.push('/create')}>
+                    <TouchableOpacity 
+                        onPress={() => router.push(petRoute)}
+                    > 
                         <MaterialCommunityIcons 
-                            name="eye" 
+                            name='eye' 
                             size={26} 
-                            color="#161622" 
+                            color='#161622' 
                         />
                     </TouchableOpacity>
                 </View>
