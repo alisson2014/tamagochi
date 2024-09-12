@@ -1,4 +1,4 @@
-import { PetItem, SearchPet, CustomLink } from '@/components';
+import { PetItem, SearchPet, CustomLink, LinearGradient } from '@/components';
 import { usePetsDatabase } from '@/database';
 import { mainTitle, scrollViewContainer } from '@/styles';
 import { Pet } from '@/types';
@@ -93,8 +93,10 @@ export default function Home() {
             />
           )}
           contentContainerStyle={{ paddingBottom: 16, gap: 16 }}
-          style={{ maxHeight: '80%' }}
+          style={{ maxHeight: '84%' }}
         />
+        
+        <LinearGradient />
       </View>
 
       <StatusBar style='dark' />

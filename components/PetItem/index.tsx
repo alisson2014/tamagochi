@@ -22,19 +22,23 @@ export default function PetItem({
                 <Text style={styles.title}>{data.name}</Text>
 
                 <View style={styles.options}>
-                    {showBookmark && (
+                    {showBookmark ? (
                         <TouchableOpacity onPress={() => markFavorite(data)}>
                             <MaterialCommunityIcons 
-                                name='bookmark-multiple' 
-                                size={26} 
-                                color={data.favorite ? '#F08000' : '#161622'} 
+                                name={data.favorite ? 'bookmark-multiple' : 'bookmark-multiple-outline'}
+                                size={28} 
+                                color='#F08000' 
                             />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity onPress={() => markFavorite(data)}> 
+                            <MaterialCommunityIcons name="bookmark-off-outline" size={28} color="#F08000" />
                         </TouchableOpacity>
                     )}
 
                     {typeof deletePet === 'function' && (
                         <TouchableOpacity onPress={() => deletePet(data)}>
-                            <MaterialCommunityIcons name='delete-forever' size={26} color='#161622' />
+                            <MaterialCommunityIcons name='delete-forever' size={28} color='#ca0b00' />
                         </TouchableOpacity>
                     )}
                     
@@ -43,23 +47,10 @@ export default function PetItem({
                     > 
                         <MaterialCommunityIcons 
                             name='eye' 
-                            size={26} 
-                            color='#161622' 
+                            size={28} 
+                            color='#2262c9' 
                         />
                     </TouchableOpacity>
-
-                    {data.favorite && (
-                        <TouchableOpacity onPress={() => {
-                            data.favorite = false;
-                            markFavorite(data);
-                        }}> 
-                            <MaterialCommunityIcons 
-                                name="bookmark-remove" 
-                                size={26} 
-                                color="#161622" 
-                            />
-                        </TouchableOpacity>
-                    )}
                 </View>
             </View>
 
