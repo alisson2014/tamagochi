@@ -21,6 +21,8 @@ export default function PetItem({
             <View style={styles.textContainer}>
                 <Text style={styles.title}>{data.name}</Text>
 
+                <Text>{data.status}</Text>
+
                 <View style={styles.options}>
                     {showBookmark ? (
                         <TouchableOpacity onPress={() => markFavorite(data)}>

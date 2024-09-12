@@ -27,7 +27,7 @@ export function usePetsDatabase() {
 
     async function searchByName(name: string) {
         try {
-            const query = 'SELECT id, name, uri, favorite FROM pets WHERE name LIKE ?';
+            const query = 'SELECT * FROM pets WHERE name LIKE ?';
             return await database.getAllAsync<Pet>(query, `%${name}%`);
         } catch (error) {
             throw error;
@@ -36,7 +36,7 @@ export function usePetsDatabase() {
 
     async function searchByNameFavorite(name: string) {
         try {
-            const query = 'SELECT id, name, uri, favorite FROM pets WHERE name LIKE ? AND favorite = 1';
+            const query = 'SELECT * FROM pets WHERE name LIKE ? AND favorite = 1';
             return await database.getAllAsync<Pet>(query, `%${name}%`);
         } catch (error) {
             throw error;

@@ -56,11 +56,11 @@ export default function Bookmark() {
           }
           data={pets}
           renderItem={({ item }) => <PetItem data={item} markFavorite={markFavorite} />}
-          contentContainerStyle={{ paddingBottom: 16, gap: 16 }}
+          contentContainerStyle={{ paddingBottom: 32, gap: 16 }}
           style={{ maxHeight: '84%' }}
         />
 
-        <LinearGradient />
+      {pets.length > 2 && <LinearGradient />} 
       </View>
 
       <StatusBar style='dark' />

@@ -3,6 +3,11 @@ export type Pet = {
     name: string;
     uri: string;
     favorite: boolean;
+    created_at: string;
+    hunger: number;
+    sleep: number;
+    fun: number;
+    status: string;
 };
 
-export type NewPet = Omit<Pet, "id" | "favorite">;
+export type NewPet = Pick<Pet, "name" | "uri">;
