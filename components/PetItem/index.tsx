@@ -47,6 +47,19 @@ export default function PetItem({
                             color='#161622' 
                         />
                     </TouchableOpacity>
+
+                    {data.favorite && (
+                        <TouchableOpacity onPress={() => {
+                            data.favorite = false;
+                            markFavorite(data);
+                        }}> 
+                            <MaterialCommunityIcons 
+                                name="bookmark-remove" 
+                                size={26} 
+                                color="#161622" 
+                            />
+                        </TouchableOpacity>
+                    )}
                 </View>
             </View>
 

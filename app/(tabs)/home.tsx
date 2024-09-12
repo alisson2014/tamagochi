@@ -38,8 +38,8 @@ export default function Home() {
 
   const deletePet = useCallback((pet: Pet) => {
     Alert.alert(
-      "Confirmação",
-      "Você tem certeza que deseja excluir este bichinho?",
+      "Atenção!",
+      `Você tem certeza que deseja excluir o bichinho ${pet.name}? :(`,  
       [
         {
           text: "Cancelar",

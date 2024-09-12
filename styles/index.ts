@@ -9,7 +9,7 @@ export const defaultStyles = StyleSheet.create({
     },
     input: {
         height: 64,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: '#999',
         borderRadius: 8,
         paddingHorizontal: 16 

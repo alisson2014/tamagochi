@@ -1,4 +1,4 @@
-import { View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, Image } from 'react-native';
 import { icons } from '@/constants';
 import { styles } from './styles';
 import { ISearchPet } from './types';
@@ -12,13 +12,12 @@ export default function SearchPet(props: ISearchPet) {
             style={styles.searchInput} 
             {...props}
         />
-        <TouchableOpacity onPress={() => {}}>
-            <Image 
-                resizeMode='center'
-                source={icons.search}
-                style={{ tintColor: "black" }}
-            />
-        </TouchableOpacity>
+
+        <Image 
+            resizeMode='center'
+            source={icons.search}
+            style={{ tintColor: "black" }}
+        />
   </View>
   );
 };
