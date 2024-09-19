@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        height: 200
     },
     title: {
         fontFamily: 'Poppins-SemiBold',
@@ -16,11 +17,25 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         color: '#161622'
     },
+    status: {
+        fontFamily: 'Poppins-Regular',
+        fontSize: 14,
+        color: '#161622'
+    },
+    attributesContainer: {
+        display: 'flex',
+        gap: 8
+    },
+    attributeText: {
+        fontFamily: 'Poppins-Light',
+        fontStyle: 'italic',
+        fontSize: 14
+    },
     textContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 128
+        height: '80%',
     },
     options: {
         display: 'flex',
@@ -33,8 +48,8 @@ export const styles = StyleSheet.create({
     },
     image: {
         marginVertical: 32,
-        width: '40%',
-        height: 128,
+        width: '42.5%',
+        height: 144,
         borderRadius: 128,
     }
 });

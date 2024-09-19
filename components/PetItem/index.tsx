@@ -19,9 +19,13 @@ export default function PetItem({
     return (
         <Pressable {...rest} style={styles.container}>
             <View style={styles.textContainer}>
-                <Text style={styles.title}>{data.name}</Text>
+                <Text style={styles.title}>{data.name} <Text style={styles.status}>({data.status})</Text></Text>
 
-                <Text>{data.status}</Text>
+                <View style={styles.attributesContainer}>
+                    <Text style={styles.attributeText}>Diversão: {data.fun}</Text>
+                    <Text style={styles.attributeText}>Fome: {data.hunger}</Text>
+                    <Text style={styles.attributeText}>Sono: {data.sleep}</Text> 
+                </View>
 
                 <View style={styles.options}>
                     {showBookmark ? (
