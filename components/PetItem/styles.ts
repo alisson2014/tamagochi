@@ -11,31 +11,15 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: 200
     },
-    title: {
-        fontFamily: 'Poppins-SemiBold',
-        fontWeight: '700',
-        fontSize: 20,
-        color: '#161622'
-    },
-    status: {
-        fontFamily: 'Poppins-Regular',
-        fontSize: 14,
-        color: '#161622'
-    },
     attributesContainer: {
         display: 'flex',
         gap: 8
-    },
-    attributeText: {
-        fontFamily: 'Poppins-Light',
-        fontStyle: 'italic',
-        fontSize: 14
     },
     textContainer: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: '80%',
+        height: '85%',
     },
     options: {
         display: 'flex',

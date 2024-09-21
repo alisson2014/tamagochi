@@ -25,9 +25,11 @@ export default function CustomButton({
       {isLoading && (
         <ActivityIndicator
           animating={isLoading}
+
+
           color="#fff"
           size="small"
-          style={styles.loading}
+          style={[styles.loading, { marginLeft: 8 }]}
         />
       )}
     </TouchableOpacity>

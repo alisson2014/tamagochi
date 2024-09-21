@@ -1,3 +1,5 @@
+export type PetStatus = "morto" | "crítico" | "muito triste" | "triste" | "ok" | "bem" | "muito bem";
+
 export type Pet = {
     id: number;
     name: string;
@@ -7,7 +9,7 @@ export type Pet = {
     hunger: number;
     sleep: number;
     fun: number;
-    status: string;
+    status: PetStatus;
 };
 
 export type NewPet = Pick<Pet, "name" | "uri">;

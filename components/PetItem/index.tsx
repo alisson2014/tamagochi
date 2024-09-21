@@ -1,8 +1,9 @@
-import { TouchableOpacity, Image, Pressable, Text, View } from 'react-native';
+import { TouchableOpacity, Image, Pressable, View } from 'react-native';
 import { styles } from './styles';
 import { IPetItem } from './types';
 import { router, type Href } from 'expo-router';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { AttributeText, PetTitle } from './components';
 
 export default function PetItem({ 
     data, 
@@ -19,12 +20,12 @@ export default function PetItem({
     return (
         <Pressable {...rest} style={styles.container}>
             <View style={styles.textContainer}>
-                <Text style={styles.title}>{data.name} <Text style={styles.status}>({data.status})</Text></Text>
-
+                <PetTitle pet={data} /> 
+    
                 <View style={styles.attributesContainer}>
-                    <Text style={styles.attributeText}>Diversão: {data.fun}</Text>
-                    <Text style={styles.attributeText}>Fome: {data.hunger}</Text>
-                    <Text style={styles.attributeText}>Sono: {data.sleep}</Text> 
+                    <AttributeText range={data.fun}>Diversão:</AttributeText>
+                    <AttributeText range={data.hunger}>Fome:</AttributeText>
+                    <AttributeText range={data.sleep}>Sono:</AttributeText>
                 </View>
 
                 <View style={styles.options}>
@@ -44,7 +45,7 @@ export default function PetItem({
 
                     {typeof deletePet === 'function' && (
                         <TouchableOpacity onPress={() => deletePet(data)}>
-                            <MaterialCommunityIcons name='delete-forever' size={28} color='#ca0b00' />
+                            <MaterialCommunityIcons name='delete-forever' size={28} color='#CA0B00' />
                         </TouchableOpacity>
                     )}
                     
