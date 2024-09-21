@@ -13,11 +13,11 @@ export default function Home() {
   const [search, setSearch] = useState<string>("");
   const [markBook, setMarkbook] = useState<boolean>(false);
 
-  const petsDatabase = usePetsDatabase();
+  const { searchByName, toggleFavorite, remove } = usePetsDatabase();
 
   const list = useCallback(async () => {
     try {
-      const response = await petsDatabase.searchByName(search);
+      const response = await searchByName(search);
       setPets(response);
     } catch (error) {
       Alert.alert("Erro", "Ocorreu um erro ao buscar os bichinhos, tente novamente mais tarde");
@@ -29,7 +29,7 @@ export default function Home() {
 
   const markFavorite = useCallback(async (pet: Pet) => {
     try {
-        await petsDatabase.markFavorite(pet.id, !pet.favorite);
+        await toggleFavorite(pet.id, !pet.favorite);
         setMarkbook(true);
     } catch (error) {
         console.error(`Erro ao salvar favorito: ${error}`);
@@ -49,7 +49,7 @@ export default function Home() {
           text: "Excluir",
           onPress: async () => {
             try {
-              await petsDatabase.remove(pet.id);
+              await remove(pet.id);
               await list();
             } catch (error) {
               console.error(`Erro ao deletar bichinho: ${error}`);
@@ -73,7 +73,11 @@ export default function Home() {
       <View style={scrollViewContainer}>
         <Text style={[mainTitle, { marginBottom: 16 }]}>Encontre seu bichinho</Text>
 
-        <SearchPet onChangeText={e => setSearch(e)} value={search} />
+        <SearchPet 
+          onClear={() => setSearch("")}
+          onChangeText={e => setSearch(e)} 
+          value={search} 
+        />
 
         <FlatList 
           ListHeaderComponent={

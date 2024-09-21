@@ -52,7 +52,7 @@ export function usePetsDatabase() {
         }
     }
 
-    async function markFavorite(id: number, favorite: boolean) {
+    async function toggleFavorite(id: number, favorite: boolean) {
         const stmt = await database.prepareAsync(`UPDATE pets SET favorite = $favorite WHERE id = $id`);
 
         try {
@@ -88,7 +88,7 @@ export function usePetsDatabase() {
     return { 
         create, 
         searchByName, 
-        markFavorite, 
+        toggleFavorite, 
         searchByNameFavorite, 
         remove,
         getById

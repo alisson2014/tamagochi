@@ -20,7 +20,7 @@ export default function Create() {
   const [disabledSubmit, setDisabledSubmit] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const petsDatabase = usePetsDatabase();
+  const { create } = usePetsDatabase();
 
   const handleSubmit = async () => {
     if(!pet.name) {
@@ -31,7 +31,7 @@ export default function Create() {
 
     setLoading(true);
     try {
-      const { insertedRowId } = await petsDatabase.create(pet);
+      const { insertedRowId } = await create(pet);
       Alert.alert('Sucesso', `Novo bichinho cadastrado com sucesso`);
       console.info(`Novo bichinho cadastrado com sucesso: ${insertedRowId}`);
       setPet(initPet);
@@ -39,7 +39,7 @@ export default function Create() {
       Alert.alert(`Erro ao salvar bichinho :<`);
       console.error(`Erro ao salvar novo bichinho: ${error}`);
     } finally {
-      setLoading(false);
+      setTimeout(() => setLoading(false), 1000);
     }
   };
 

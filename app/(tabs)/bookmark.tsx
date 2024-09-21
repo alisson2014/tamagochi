@@ -12,11 +12,11 @@ export default function Bookmark() {
   const [pets, setPets] = useState<Pet[]>([]);
   const [search, setSearch] = useState<string>("");
 
-  const petsDatabase = usePetsDatabase();
+  const { searchByNameFavorite, toggleFavorite } = usePetsDatabase();
 
   const list = useCallback(async () => {
     try {
-      const response = await petsDatabase.searchByNameFavorite(search);
+      const response = await searchByNameFavorite(search);
       setPets(response);
     } catch (error) {
       Alert.alert("Erro", "Ocorreu um erro ao buscar os bichinhos, tente novamente mais tarde");
@@ -26,7 +26,7 @@ export default function Bookmark() {
 
   const markFavorite = useCallback(async (pet: Pet) => {
     try {
-        await petsDatabase.markFavorite(pet.id, false);
+        await toggleFavorite(pet.id, false);
         await list();
     } catch (error) {
         console.error(`Erro ao salvar favorito: ${error}`);
@@ -44,7 +44,11 @@ export default function Bookmark() {
       <View style={scrollViewContainer}>
         <Text style={[mainTitle, { marginBottom: 16 }]}>Encontre seu bichinho</Text>
 
-        <SearchPet onChangeText={e => setSearch(e)} value={search} />
+        <SearchPet 
+          onChangeText={e => setSearch(e)} 
+          value={search} 
+          onClear={() => setSearch("")}
+        />
 
         <FlatList 
           ListHeaderComponent={

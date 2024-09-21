@@ -1,3 +1,5 @@
 import { TextInputProps } from "react-native";
 
-export interface ISearchPet extends TextInputProps {}
+export type SearchPetProps = TextInputProps & {
+    onClear: () => void;
+};

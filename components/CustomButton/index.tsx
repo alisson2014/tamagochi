@@ -14,7 +14,7 @@ export default function CustomButton({
       activeOpacity={0.7}
       style={[
         styles.container,
-        { opacity: props.disabled ? 0.75 : 1 }
+        { backgroundColor: props.disabled ? '#999' : '#2C7429' },
       ]}
       {...props}
     >
