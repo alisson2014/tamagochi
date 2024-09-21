@@ -4,6 +4,9 @@ import PetItem from "./PetItem";
 import SearchPet from "./SearchPet";
 import CustomLink from "./CustomLink";
 import LinearGradient from "./LinearGradient";
+import PageLoading from "./PageLoading";
+import BookmarkButton from "./BookmarkButton";
+import { AttributeText } from "./PetItem/components";
 
 export { 
     CustomButton, 
@@ -11,5 +14,8 @@ export {
     PetItem, 
     SearchPet, 
     CustomLink,
-    LinearGradient
+    LinearGradient,
+    PageLoading,
+    BookmarkButton,
+    AttributeText
 };

@@ -3,6 +3,7 @@ import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { SQLiteProvider } from 'expo-sqlite';
 import { initializeDatabase } from '@/database';
+import { PetsProvider } from '@/components/PetsProvider';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,17 +36,19 @@ export default function RootLayout() {
 
   return (
     <SQLiteProvider databaseName='tamagochiR.db' onInit={initializeDatabase}>
-      <Stack>
-          <Stack.Screen name='index' options={{ headerShown: false }} />
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-          <Stack.Screen 
-            name='[petDetails]' 
-            options={{ 
-              headerShown: true,
-              title: 'Detalhes do Bichinho',
-            }} 
-          />
-      </Stack>
+      <PetsProvider>
+        <Stack>
+            <Stack.Screen name='index' options={{ headerShown: false }} />
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+            <Stack.Screen 
+              name='[petDetails]' 
+              options={{ 
+                headerShown: true,
+                title: 'Detalhes do Bichinho',
+              }} 
+            />
+        </Stack>
+      </PetsProvider>
     </SQLiteProvider>
   );
 };

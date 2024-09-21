@@ -85,12 +85,32 @@ export function usePetsDatabase() {
         }
     };
 
+    async function reduceAttributes() {
+        const stmt = await database.prepareAsync(`
+            UPDATE pets 
+            SET 
+                sleep = CASE WHEN sleep > 0 THEN sleep - 1 ELSE 10 END,
+                hunger = CASE WHEN hunger > 0 THEN hunger - 1 ELSE 10 END,
+                fun = CASE WHEN fun > 0 THEN fun - 1 ELSE 10 END
+            WHERE sleep > 0 OR hunger > 0 OR fun > 0
+        `);
+
+        try {
+            await stmt.executeAsync();
+        } catch (error) {
+            throw error;
+        } finally {
+            await stmt.finalizeAsync();
+        }
+    }
+
     return { 
         create, 
         searchByName, 
         toggleFavorite, 
         searchByNameFavorite, 
         remove,
-        getById
+        getById,
+        reduceAttributes
     };
 };

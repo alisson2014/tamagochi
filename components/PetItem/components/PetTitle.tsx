@@ -1,6 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { getPetStatus } from "@/service";
 import { Pet } from "@/types";
+import { getStatusColor } from "@/service";
 
 type PetTitleProps = {
     pet: Pet;
@@ -11,32 +12,11 @@ export default function PetTitle({ pet }: PetTitleProps) {
 
     const status = getPetStatus(fun, sleep, hunger);
 
-    const statusColor = () => {
-        switch(status) {
-            case 'morto':
-                return '#808080'; 
-            case 'crítico':
-                return '#FF0000'; 
-            case 'muito triste':
-                return '#00008B'; 
-            case 'triste':
-                return '#0000FF'; 
-            case 'ok':
-                return '#FFFF00'; 
-            case 'bem':
-                return '#90EE90';
-            case 'muito bem':
-                return '#008000';
-            default:
-                return '#000000';
-        }
-    };
-
     return (
         <Text style={styles.title}>
             {name}
             {' '}
-            <Text style={[styles.status, { color: statusColor() }]}>({status})</Text>
+            <Text style={[styles.status, { color: getStatusColor(status) }]}>({status})</Text>
         </Text>
     );
 };

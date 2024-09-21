@@ -1,23 +1,19 @@
+import { getAttributeColor } from "@/service";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 type AttributeTextProps = {
     children?: React.ReactNode;
+    fontSize?: number;
     range: number;
 };
 
-export default function AttributeText({ range, children }: AttributeTextProps) {
-    const statusColor = () => {
-        if(range >= 60) return '#2C7429';
-        else if(range >= 30) return '#F08000';
-        else return '#CA0B00';
-    };
-
+export default function AttributeText({ range, fontSize, children }: AttributeTextProps) {
     return (
-        <Text style={styles.attributeText}>
+        <Text style={[styles.attributeText, { fontSize }]} >
             {children}
             {' '}
-            <Text style={{ color: statusColor(), fontWeight: '800' }}>
+            <Text style={{ color: getAttributeColor(range), fontWeight: '800' }}>
                 {range}%
             </Text>
         </Text>

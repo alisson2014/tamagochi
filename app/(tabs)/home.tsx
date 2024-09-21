@@ -1,4 +1,4 @@
-import { PetItem, SearchPet, CustomLink, LinearGradient } from '@/components';
+import { PetItem, SearchPet, CustomLink, LinearGradient, PageLoading } from '@/components';
 import { usePetsDatabase } from '@/database';
 import { mainTitle, scrollViewContainer } from '@/styles';
 import { Pet } from '@/types';
@@ -11,26 +11,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function Home() {
   const [pets, setPets] = useState<Pet[]>([]);
   const [search, setSearch] = useState<string>("");
-  const [markBook, setMarkbook] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { searchByName, toggleFavorite, remove } = usePetsDatabase();
 
   const list = useCallback(async () => {
     try {
+      if(!search) setLoading(true);
       const response = await searchByName(search);
       setPets(response);
     } catch (error) {
       Alert.alert("Erro", "Ocorreu um erro ao buscar os bichinhos, tente novamente mais tarde");
       console.error(`Erro ao buscar bichinhos: ${error}`);
     } finally {
-      setMarkbook(false);
+      setTimeout(() => setLoading(false), 300);
     }
-  }, [search, markBook]);
+  }, [search]);
 
   const markFavorite = useCallback(async (pet: Pet) => {
     try {
         await toggleFavorite(pet.id, !pet.favorite);
-        setMarkbook(true);
+        setPets(prev => prev.map(p => p.id === pet.id ? { ...p, favorite: !p.favorite } : p));
     } catch (error) {
         console.error(`Erro ao salvar favorito: ${error}`);
     }
@@ -70,7 +71,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={{ height: '100%' }}>
-      <View style={scrollViewContainer}>
+      <View style={[scrollViewContainer, { flex: loading ? 1 : 0 }]}>
         <Text style={[mainTitle, { marginBottom: 16 }]}>Encontre seu bichinho</Text>
 
         <SearchPet 
@@ -79,28 +80,31 @@ export default function Home() {
           value={search} 
         />
 
-        <FlatList 
-          ListHeaderComponent={
-            <>
-              {pets.length === 0 && (
-                <CustomLink href='/create' title='Nenhum bichinho encontrado :< Que tal cadastrar um?' />
+        {loading ? <PageLoading /> : (
+          <>          
+            <FlatList 
+              ListHeaderComponent={
+                <>
+                  {pets.length === 0 && (
+                    <CustomLink href='/create' title='Nenhum bichinho encontrado :< Que tal cadastrar um?' />
+                  )}
+                </>
+              }
+              data={pets}
+              renderItem={({ item }) => (
+                <PetItem 
+                  data={item} 
+                  markFavorite={markFavorite} 
+                  deletePet={deletePet}
+                  showBookmark
+                />
               )}
-            </>
-          }
-          data={pets}
-          renderItem={({ item }) => (
-            <PetItem 
-              data={item} 
-              markFavorite={markFavorite} 
-              deletePet={deletePet}
-              showBookmark
+              contentContainerStyle={{ paddingBottom: 32, gap: 16 }}
+              style={{ maxHeight: '84%' }}
             />
-          )}
-          contentContainerStyle={{ paddingBottom: 32, gap: 16 }}
-          style={{ maxHeight: '84%' }}
-        />
-        
-        {pets.length > 2 && <LinearGradient />}
+            {pets.length > 2 && <LinearGradient />}
+          </>
+        )}
       </View>
 
       <StatusBar style='dark' />

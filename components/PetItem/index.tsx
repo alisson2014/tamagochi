@@ -4,6 +4,7 @@ import { IPetItem } from './types';
 import { router, type Href } from 'expo-router';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { AttributeText, PetTitle } from './components';
+import BookmarkButton from '../BookmarkButton';
 
 export default function PetItem({ 
     data, 
@@ -30,13 +31,7 @@ export default function PetItem({
 
                 <View style={styles.options}>
                     {showBookmark ? (
-                        <TouchableOpacity onPress={() => markFavorite(data)}>
-                            <MaterialCommunityIcons 
-                                name={data.favorite ? 'bookmark-multiple' : 'bookmark-multiple-outline'}
-                                size={28} 
-                                color='#F08000' 
-                            />
-                        </TouchableOpacity>
+                        <BookmarkButton isFavorite={data.favorite} onPress={() => markFavorite(data)} />
                     ) : (
                         <TouchableOpacity onPress={() => markFavorite(data)}> 
                             <MaterialCommunityIcons name="bookmark-off-outline" size={28} color="#F08000" />
