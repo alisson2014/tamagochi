@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { usePetsDatabase } from '@/database';
 import { Pet } from '@/types';
 import { PageLoading } from '@/components';
-import { getStatusColor } from '@/service';
+import { getPetStatus, getStatusColor } from '@/service';
 import { BookmarkButton, AttributeText } from '@/components';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const initialPet: Pet = {
   id: 0,
@@ -17,6 +18,8 @@ const initialPet: Pet = {
   fun: 0,
   status: 'ok',
   favorite: false,
+  is_sleeping: false,
+  sleep_start_time: ''
 };
 
 export default function PetDetails() {
@@ -24,8 +27,9 @@ export default function PetDetails() {
 
   const [pet, setPet] = useState<Pet>(initialPet);
   const [loading, setLoading] = useState<boolean>(true);
+  const petStatus = getPetStatus(pet.fun, pet.sleep, pet.hunger);
 
-  const { getById, toggleFavorite } = usePetsDatabase();
+  const { getById, toggleFavorite, eat, putPetToSleep, wakePetUp } = usePetsDatabase();
 
   const getPet = useCallback(async () => {
     setLoading(true);
@@ -46,7 +50,30 @@ export default function PetDetails() {
     } catch (error) {
       console.error(`Erro ao salvar favorito: ${error}`);
     }
-  }, []);
+  }, [pet]);
+
+  const toEat = useCallback(async () => {
+    try {
+      await eat(pet.id);
+      setPet(prev => ({ ...prev, hunger: Math.min(prev.hunger + 10, 100) }));
+    } catch (error) {
+      console.error(`Erro ao alimentar bichinho: ${error}`);
+    }
+  }, [pet]);
+
+  const toSleep = useCallback(async () => {
+    try {
+      if (pet.is_sleeping) {
+        await wakePetUp(pet.id);
+        await getPet();
+      } else {
+        await putPetToSleep(pet.id);
+        setPet(prev => ({ ...prev, is_sleeping: true }));
+      }
+    } catch (error) {
+      console.error(`Erro ao colocar bichinho para dormir: ${error}`);
+    }
+  }, [pet]);
 
   useEffect(() => {
     getPet();
@@ -59,11 +86,11 @@ export default function PetDetails() {
   return (
     <View style={styles.container}>
       {pet.id !== 0 ? (
-        <View>
+        <View style={styles.petContainer}>
           <View style={styles.detailsTop}>
             <View>
               <Text style={styles.name}>{pet.name}</Text>
-              <Text style={[styles.status, { color: getStatusColor(pet.status) }]}>{pet.status}</Text>
+              <Text style={[styles.status, { color: getStatusColor(petStatus) }]}>{petStatus}</Text>
             </View>
 
             <BookmarkButton isFavorite={pet.favorite} onPress={markFavorite} />
@@ -82,10 +109,26 @@ export default function PetDetails() {
             <AttributeText range={pet.sleep} fontSize={22}>Sono:</AttributeText>
           </View>
 
-          {/* Colocar opções de ação aqui */}
-          {/* Alimentar o pet, brincar com o pet, colocar o pet para dormir */}
+          <View style={styles.actionOptions}>
+            <TouchableOpacity 
+              onPress={toEat} 
+              style={[styles.actionButton, pet.hunger === 100 && styles.actionButtonDisabled]}
+              disabled={pet.hunger === 100}
+            >
+              <MaterialCommunityIcons name="food-apple" size={28} color="red" />
+              <Text style={styles.actionOptionText}>Comer</Text>
+            </TouchableOpacity>
 
-          {/* Adicionar rota de mini games */}
+            <TouchableOpacity onPress={toSleep} style={styles.actionButton}>
+              <MaterialCommunityIcons name="sleep" size={28} color="purple" />
+              <Text style={styles.actionOptionText}>{pet.is_sleeping ? "Acordar" : "Dormir"}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.actionButton}>
+              <MaterialCommunityIcons name="gamepad-variant" size={28} color="#089158" />
+              <Text style={styles.actionOptionText}>Brincar</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : <Text>Pet não encontrado</Text>}
     </View>
@@ -97,6 +140,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     paddingHorizontal: 32
+  },
+  petContainer: {
+    display: 'flex',
+    gap: 32
   },
   detailsTop: {
     display: 'flex',
@@ -131,6 +178,25 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 320,
     borderRadius: 272,
-    marginVertical: 32,
+  },
+  actionOptions: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  actionButton: {
+    backgroundColor: '#d8c852',
+    padding: 20,
+    borderRadius: 48,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionButtonDisabled: {
+    backgroundColor: '#999',
+  },
+  actionOptionText: {
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
   }
 });

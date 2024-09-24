@@ -11,7 +11,9 @@ export async function initializeDatabase(database: SQLiteDatabase) {
             hunger INTEGER NOT NULL DEFAULT 100,
             sleep INTEGER NOT NULL DEFAULT 100,
             fun INTEGER NOT NULL DEFAULT 100,
-            status TEXT NOT NULL DEFAULT 'muito bem'
+            status TEXT NOT NULL DEFAULT 'muito bem',
+            is_sleeping INTEGER NOT NULL DEFAULT 0, 
+            sleep_start_time DATETIME
         );
     `);
 };

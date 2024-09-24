@@ -10,6 +10,8 @@ export type Pet = {
     sleep: number;
     fun: number;
     status: PetStatus;
+    is_sleeping: boolean;
+    sleep_start_time: string;
 };
 
 export type NewPet = Pick<Pet, "name" | "uri">;

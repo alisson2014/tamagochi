@@ -6,7 +6,7 @@ export function usePetsDatabase() {
 
     async function create(pet: NewPet) {
         const stmt = await database.prepareAsync(
-            `INSERT INTO pets (name, uri) VALUES ($name, $uri)`
+            `INSERT INTO pets (name, uri, sleep) VALUES ($name, $uri, 30)`
         );
 
         try {
@@ -85,6 +85,22 @@ export function usePetsDatabase() {
         }
     };
 
+    async function eat(id: number) {
+        const stmt = await database.prepareAsync(`
+            UPDATE pets 
+            SET hunger = MIN(hunger + 10, 100) 
+            WHERE id = $id
+        `);
+
+        try {
+            await stmt.executeAsync({ $id: id });
+        } catch (error) {
+            throw error;
+        } finally {
+            await stmt.finalizeAsync();
+        }
+    }
+
     async function reduceAttributes() {
         const stmt = await database.prepareAsync(`
             UPDATE pets 
@@ -104,6 +120,54 @@ export function usePetsDatabase() {
         }
     }
 
+    async function putPetToSleep(id: number) {
+        const sleepStartTime = new Date().toISOString();
+        const stmt = await database.prepareAsync(`
+            UPDATE pets 
+            SET is_sleeping = 1, sleep_start_time = $sleepStartTime 
+            WHERE id = $id
+        `);
+    
+        try {
+            await stmt.executeAsync({ $sleepStartTime: sleepStartTime, $id: id });
+        } catch (error) {
+            throw error;
+        } finally {
+            await stmt.finalizeAsync();
+        }
+    }
+
+    async function wakePetUp(id: number) {
+        const pet = await database.getFirstAsync<Pet>(`
+            SELECT sleep_start_time, sleep 
+            FROM pets 
+            WHERE id = $id AND is_sleeping = 1
+        `, { $id: id });
+    
+        if (!pet) {
+            throw new Error('Pet is not sleeping or does not exist');
+        }
+    
+        const sleepStartTime = new Date(pet.sleep_start_time);
+        const currentTime = new Date();
+        const sleepDurationHours = (currentTime.getTime() - sleepStartTime.getTime()) / (1000 * 60);
+        const sleepIncrease = Math.min(Math.floor(sleepDurationHours * 5), 100 - pet.sleep);
+    
+        const stmt = await database.prepareAsync(`
+            UPDATE pets 
+            SET is_sleeping = 0, sleep_start_time = NULL, sleep = sleep + $sleepIncrease 
+            WHERE id = $petId
+        `);
+    
+        try {
+            await stmt.executeAsync({ $sleepIncrease: sleepIncrease, $petId: id });
+        } catch (error) {
+            throw error;
+        } finally {
+            await stmt.finalizeAsync();
+        }
+    }
+
     return { 
         create, 
         searchByName, 
@@ -111,6 +175,9 @@ export function usePetsDatabase() {
         searchByNameFavorite, 
         remove,
         getById,
-        reduceAttributes
+        reduceAttributes,
+        eat,
+        putPetToSleep,
+        wakePetUp
     };
 };
