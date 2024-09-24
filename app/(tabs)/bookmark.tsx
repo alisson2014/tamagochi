@@ -21,7 +21,6 @@ export default function Bookmark() {
       const response = await searchByNameFavorite(search);
       setPets(response);
     } catch (error) {
-      Alert.alert("Erro", "Ocorreu um erro ao buscar os bichinhos, tente novamente mais tarde");
       console.error(`Erro ao buscar bichinhos: ${error}`);
     } finally {
       setTimeout(() => setLoading(false), 300);

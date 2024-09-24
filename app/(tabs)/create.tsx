@@ -8,7 +8,6 @@ import { CustomButton } from '@/components';
 import { StatusBar } from 'expo-status-bar';
 import * as baseStyles from '@/styles';
 import { usePetsDatabase } from '@/database';
-import { StyleSheet } from "react-native";
 
 const initPet: NewPet = {
   name: '',
@@ -39,7 +38,7 @@ export default function Create() {
       Alert.alert(`Erro ao salvar bichinho :<`);
       console.error(`Erro ao salvar novo bichinho: ${error}`);
     } finally {
-      setTimeout(() => setLoading(false), 1000);
+      setTimeout(() => setLoading(false), 500);
     }
   };
 
@@ -71,7 +70,7 @@ export default function Create() {
           Cadastre seu bichinho
         </Text>
 
-        <View style={styles.inputContainer}>
+        <View style={baseStyles.createStyles.inputContainer}>
           <View style={baseStyles.formGroup}>
             <Text style={baseStyles.label}>Nome</Text>
             <TextInput 
@@ -90,17 +89,17 @@ export default function Create() {
                 <Image
                   source={{ uri: pet.uri }}
                   resizeMode='cover'
-                  style={styles.uploadCover}
+                  style={baseStyles.createStyles.uploadCover}
                 />
               ) : (
-                <View style={styles.uploadButton}>
+                <View style={baseStyles.createStyles.uploadButton}>
                   <Image
                     source={icons.upload}
                     resizeMode='contain'
                     alt='upload'
-                    style={styles.uploadImage}
+                    style={baseStyles.createStyles.uploadImage}
                   />
-                  <Text style={styles.uploadText}>
+                  <Text style={baseStyles.createStyles.uploadText}>
                     Escolha uma imagem
                   </Text>
                 </View>
@@ -121,39 +120,3 @@ export default function Create() {
     </SafeAreaView>
   );
 };
-
-export const styles = StyleSheet.create({
-  inputContainer: {
-      marginTop: 28,
-      display: 'flex',
-      gap: 16
-  },
-  uploadButton: {
-      width: '100%',
-      height: 256,
-      borderRadius: 8,
-      borderWidth: 1,
-      paddingLeft: 16,
-      paddingRight: 16,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 24,
-      borderColor: '#999'
-  },
-  uploadImage: {
-      width: 32,
-      height: 32
-  },
-  uploadText: {
-      fontSize: 20,
-      fontWeight: '500',
-      lineHeight: 28,
-      fontFamily: 'Poppins-Medium'
-  },
-  uploadCover: {
-      width: '100%',
-      height: 256,
-      borderRadius: 16
-  }
-});

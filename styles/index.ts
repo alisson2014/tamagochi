@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { petDetailsStyles } from './petDetails';
+import { createStyles } from "./createStyles";
 
 export const defaultStyles = StyleSheet.create({
     container: {
@@ -55,3 +57,5 @@ export const { formGroup } = StyleSheet.create({
         gap: 8
     }
 });
+
+export { petDetailsStyles, createStyles };

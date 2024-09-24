@@ -6,7 +6,7 @@ export function usePetsDatabase() {
 
     async function create(pet: NewPet) {
         const stmt = await database.prepareAsync(
-            `INSERT INTO pets (name, uri, sleep) VALUES ($name, $uri, 30)`
+            `INSERT INTO pets (name, uri) VALUES ($name, $uri)`
         );
 
         try {
@@ -101,6 +101,22 @@ export function usePetsDatabase() {
         }
     }
 
+    async function play(id: number) {
+        const stmt = await database.prepareAsync(`
+            UPDATE pets 
+            SET fun = MIN(fun + 10, 100) 
+            WHERE id = $id
+        `);
+
+        try {
+            await stmt.executeAsync({ $id: id });
+        } catch (error) {
+            throw error;
+        } finally {
+            await stmt.finalizeAsync();
+        }
+    }
+
     async function reduceAttributes() {
         const stmt = await database.prepareAsync(`
             UPDATE pets 
@@ -178,6 +194,7 @@ export function usePetsDatabase() {
         reduceAttributes,
         eat,
         putPetToSleep,
-        wakePetUp
+        wakePetUp,
+        play
     };
 };
